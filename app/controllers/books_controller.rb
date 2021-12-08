@@ -4,6 +4,9 @@ class BooksController < ApplicationController
   def show
     @newbook = Book.new
     @book = Book.find(params[:id])
+    unless ViewCount.find_by(book_id: @book.id, user_id: current_user.id)
+      current_user.view_counts.create(book_id: @book.id)
+    end
   end
 
   def index
