@@ -1,0 +1,2 @@
+$("#favorite<%= @book.id%>").html("<%= j(render "favorites/favorite-btn", book: @book) %>")
+$("#book-lists").html("<%= j(render 'books/index', books: @books) %>")
