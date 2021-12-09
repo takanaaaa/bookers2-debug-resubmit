@@ -19,8 +19,25 @@
         <td id="favorite<%= book.id%>">
           <%= render "favorites/favorite-btn", book: book %>
         </td>
+        <% if controller_name == "books" && action_name == "index" %>
+          <td class="book-evaluation" data-score="<%= book.evaluation%>"></td>
+        <% end %>
         <td>閲覧数:<%= book.view_counts.count %></td>
+        <% if book.user == current_user %>
+          <td><%= link_to 'Edit', edit_book_path(book), class: "btn btn-sm btn-success edit_book_#{book.id}" %></td>
+          <td><%= link_to 'Destroy', book_path(book), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger destroy_book_#{book.id}"%></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<script>
+  $(".book-evaluation").raty({
+    readOnly: true,
+    score: function() {
+      return $(this).attr("data-score");
+      },
+    path: "/assets/"
+  });
+</script>
